@@ -1,0 +1,72 @@
+cd /home/TE/mongodb-linux-x86_64-3.0.4/bin
+
+./mongo 10.10.10.54/t31106db -u t31106 -p t31106
+
+use t31106
+
+show collections
+
+db.createCollection("MyBatch")
+
+db.MyBatch.insert({
+	name: 'Apoorv',
+	class: 'TE1',
+	rollno: 31106
+})
+
+db.MyBatch.insert([
+{
+	name: 'Anish',
+	class: 'TE1',
+	rollno: 31105,
+	interests:['Sleep','Repeat']
+},
+{
+	name: 'Ashwin',
+	class: 'TE1',
+	rollno: 31107,
+	interests:['Football','Reddit','Cat']
+}
+])
+
+db.MyBatch.find()
+
+db.MyBatch.find().pretty()
+
+db.MyBatch.find().sort({rollno:1}).pretty()
+
+db.MyBatch.find().sort({rollno:-1}).pretty()
+
+db.MyBatch.find({rollno:31106}).count()
+
+db.MyBatch.find().limit(2).pretty()
+
+db.MyBatch.find().sort({rollno:-1}).limit(2).pretty()
+
+db.MyBatch.update({ name:'Apoorv' },
+	{
+		name: 'Apoorv',
+		class: 'TE1',
+		rollno: 31106
+	}
+)
+
+db.MyBatch.update({ name:'Dhruv' },
+	{
+		name: 'Dhruv',
+		class: 'TE1',
+		rollno: 31118,
+		interests: ['Football','Basketball','All the sports out there']
+	},
+	{
+		upsert:true
+	}
+)
+
+db.MyBatch.update({ name:'Apoorv' },
+	$set: {
+		date:date(),
+		instahandle:'darealappu'
+	}
+)
+
