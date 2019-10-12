@@ -1,0 +1,161 @@
+mysql -h localhost -u root -p
+ubuntu123456
+
+Use BloodDonationDB;
+=================================================
+
+SELECT * FROM information_schema.TABLE_CONSTRAINTS 
+WHERE information_schema.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'FOREIGN KEY' 
+AND information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA = 'BloodDonationDB'
+AND information_schema.TABLE_CONSTRAINTS.TABLE_NAME = 'SuccessfulOrder';
+
+ALTER TABLE SuccessfulOrder DROP FOREIGN KEY `SuccessfulOrder_ibfk_1`;
+ALTER TABLE SuccessfulOrder DROP FOREIGN KEY `SuccessfulOrder_ibfk_2`;
+
+=================================================
+
+create table Patient ( 
+	Aadhar_Card bigint(12) unsigned,
+	First_Name varchar(30) ,
+	Last_Name varchar(30) , 
+	Age tinyint(2) ,
+	Gender varchar(1),
+	Phone_Number bigint(10) unsigned,
+	Blood_Group varchar(4)
+);
+
+create table Donor ( 
+	Aadhar_Card bigint(12) unsigned ,
+	Email_ID varchar(30),
+	Password varchar(30),
+	First_Name varchar(30) ,
+	Last_Name varchar(30) , 
+	Age tinyint(2) ,
+	Gender varchar(1),
+	Phone_Number bigint(10) unsigned,
+	Address varchar(150),
+	Blood_Group varchar(4),
+	Is_Available boolean
+);
+
+create table BloodBank (
+	Branch_ID int,
+	Branch_Name varchar(30),
+	Branch_Address varchar(150),
+	Max_Packets int,
+	Current_Packets int,
+	Freezer boolean
+);
+
+create table BloodPacket(
+	Donor_Aadhar_Card bigint(12) unsigned ,
+	Date_Of_Entry date,
+	Branch_ID int
+);
+
+create table PendingOrder (
+	Patient_Aadhar_card bigint(12) unsigned
+);
+
+create table SuccessfulOrder (
+	Patient_Aadhar_card bigint(12) unsigned,
+	Donor_Aadhar_Card bigint(12)  unsigned,
+	Date_Of_Entry date
+);
+
+=================================================
+
+ALTER TABLE Patient ADD PRIMARY KEY (Aadhar_Card);
+
+ALTER TABLE Donor ADD PRIMARY KEY (Aadhar_Card);
+
+ALTER TABLE BloodBank ADD PRIMARY KEY (Branch_ID);
+
+ALTER TABLE BloodPacket ADD PRIMARY KEY(Donor_Aadhar_Card,Date_Of_Entry);
+
+=================================================
+
+ALTER TABLE BloodPacket ADD FOREIGN KEY (Branch_ID) REFERENCES BloodBank(Branch_ID);
+
+ALTER TABLE BloodPacket ADD FOREIGN KEY (Donor_Aadhar_Card) REFERENCES Donor(Aadhar_Card);
+
+ALTER TABLE PendingOrder ADD FOREIGN KEY (Patient_Aadhar_card) REFERENCES Patient(Aadhar_Card);
+
+ALTER TABLE SuccessfulOrder ADD FOREIGN KEY (Patient_Aadhar_card) REFERENCES Patient(Aadhar_Card);
+
+ALTER TABLE SuccessfulOrder ADD FOREIGN KEY (Donor_Aadhar_card) REFERENCES Donor(Aadhar_Card);
+
+=================================================
+
+ALTER TABLE Donor ADD UNIQUE ID(Email_ID);
+
+ALTER TABLE Donor ADD UNIQUE ID2(Phone_Number);
+
+=================================================
+
+insert into BloodBank values (1001,"Mukundnagar","Pune",100,40,1);
+insert into BloodBank values (1002,"Kondhwa","Pune",200,50,1);
+insert into BloodBank values (1003,"Aundh","Pune",1000,600,0);
+insert into BloodBank values (1004,"Baner","Pune",400,350,1);
+
+insert into Patient values (123412341234,"Apoorv","Dixit",20,"M",9028610141,"B+");
+insert into Patient values (223412341234,"Aashi","Piparsania",23,"F",9128610141,"AB+");
+insert into Patient values (323412341234,"Abhishek","Nair",27,"M",9228610141,"A+");
+insert into Patient values (423412341234,"Aditya","Kale",25,"M",9328610141,"O+");
+insert into Patient values (523412341234,"Aishwarya","Pharande",30,"F",9428610141,"O-");
+insert into Patient values (623412341234,"Ashwin","Sapre",29,"M",9528610141,"AB-");
+
+insert into Donor values (567856785678,"anish.dhage@gmail.com","iamtindergodbitches","Anish","Dhage",19,"M",6969696969,"Jarvis, Aundh, Not Mumbai, Pune.","O+",1);
+insert into Donor values (467856785678,"dhruvinamdar@gmail.com","iamfootballgodbitches","Dhruv","Inamdar",20,"M",7069696969,"Kondhwa, Pune.","B+",1);
+insert into Donor values (367856785678,"darshanbari@gmail.com","iamcodechefgodbitches","Darshan","Bari",19,"M",7269696969,"Thane, Pune","AB+",1);
+insert into Donor values (267856785678,"chaitanyasonawane@gmail.com","iamandroidgodbitches","Chaitanya","Sonawane",25 ,"M",7369696969,"Nowhere,Kolhapur.","O-",1);
+
+
+insert into PendingOrder values(123412341234);
+insert into PendingOrder values(223412341234);
+insert into PendingOrder values(323412341234);
+insert into PendingOrder values(423412341234);
+insert into PendingOrder values(523412341234);
+insert into PendingOrder values(623412341234);
+
+
+insert into BloodPacket values (567856785678, STR_TO_DATE('21-09-2019', '%d-%m-%Y') ,1001);
+insert into BloodPacket values (467856785678, STR_TO_DATE('22-09-2019', '%d-%m-%Y') ,1002);
+insert into BloodPacket values (367856785678, STR_TO_DATE('23-09-2019', '%d-%m-%Y') ,1004);
+insert into BloodPacket values (267856785678, STR_TO_DATE('24-09-2019', '%d-%m-%Y') ,1003);
+
+
+insert into SuccessfulOrder values (
+	223412341234,
+	567856785678,
+	STR_TO_DATE('21-09-2019','%d-%m-%Y')
+);
+
+
+=================================================
+
+sql = "SELECT Aadhar_Card from Donor WHERE Email_ID = '"+email_id+"'";
+
+sql = "SELECT Password from Donor WHERE Aadhar_Card = "+aadhar_card;
+
+sql = "SELECT Date_Of_Entry FROM BloodPacket where Donor_Aadhar_Card = "+aadhar_card+" ";
+
+sql = "SELECT Date_Of_Entry FROM SuccessfulOrder where Donor_Aadhar_Card = "+aadhar_card+" ";
+
+sql = "SELECT Gender FROM Donor where Aadhar_Card = "+aadhar_card+" ";
+
+sql = "UPDATE Donor SET Is_Available = 0 WHERE Aadhar_Card = "+aadhar_card;
+			
+sql = "Select p.First_Name, p.Last_Name, p.Blood_Group, p.Aadhar_Card  from Patient p, PendingOrder po  where p.Aadhar_Card = po.Patient_Aadhar_card ";
+		
+sql = "SELECT Blood_Group FROM Patient where Aadhar_Card = "+patient_aadhar_card+" ";
+
+sql = "Select d.Aadhar_Card, d.First_Name, d.Last_Name, d.Blood_Group, bp.Date_Of_Entry  from Donor d, BloodPacket bp  where d.Aadhar_Card = bp.Donor_Aadhar_Card and d.Blood_Group = '"+donor_blood_group+"' ";
+
+sql = "SELECT Date_Of_Entry FROM BloodPacket WHERE Donor_Aadhar_Card = "+donor_aadhar_card;
+
+sql = "DELETE FROM PendingOrder WHERE Patient_Aadhar_card = "+patient_aadhar_card;
+
+sql = "DELETE FROM BloodPacket WHERE Donor_Aadhar_Card = "+donor_aadhar_card;
+
+=================================================
