@@ -1,10 +1,16 @@
+1. Find Customer details and order details using NATURAL JOIN. 
+
 select * from customer 
 natural join orders;
+
+2. Find the book title, author_name, country. 
 
 select b.title,a.tuthor_Name,a.country 
 from authors a 
 inner join books b 
 where a.author_No = b.author_No;
+
+3. Find the customer ID, name and order_no of customers who have never placed an order. 
 
 select c.customer_id, c.first_name, o.order_id
 -> from customer c
@@ -12,6 +18,7 @@ select c.customer_id, c.first_name, o.order_id
 -> on c.customer_id = o.customer_id
 -> where order_id is NULL;
 
+4. Find the Title, ISBN, order_no of the books for which order is not placed. 
 
 select o.Order_No, b.ISBN, b.Title 
 from Orders o
@@ -19,22 +26,30 @@ right join Book b
 on o.ISBN = b.ISBN 
 where Order_No is NULL;
 
+5. Display cust_fname, title,author_no,publisher_year where ISBN=1234. 
+
 select c.First_Name,b.Title,b.Author_No,b.Year 
 from Customer c
 natural join Orders o
 natural join Book b 
 where ISBN = 112233;
 
+6. Display the total number of books and customer name. 
+
 select c.First_Name, sum(o.Quantity) as Total_Books
 from Customer c
 natural join Orders o
 group by o.Cust_No;
+
+7. List the cust_id, order_no and ISBN with books having title 'mysql'. 
 
 select o.Cust_No, o.Order_No, o.ISBN 
 from Orders o
 right join Book
 on o.ISBN = Book.ISBN 
 where Book.Title = "DSA";
+
+8. Find the names of all the companies that ordered books in the year 2015. 
 
 select c.Company 
 from Customer c 
