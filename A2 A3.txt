@@ -1,8 +1,6 @@
-cat ~/.mysql_history
+TE2_DBMSL_A2_A3
 
-mysql -h 10.10.10.54 -u t31106 -p
-t31106
-use t31106db
+use DBMSL;
 show tables;
 
 Delete from Author;
