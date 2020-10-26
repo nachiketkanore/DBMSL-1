@@ -10,22 +10,34 @@ db.createCollection("MyBatch")
 
 db.MyBatch.insert(
 	{
-		name: 'Apoorv',
-		class: 'TE1',
-		rollno: 31106
+		name: 'Nachiket',
+		class: 'TE2',
+		rollno: 31227
 	})
 
 db.MyBatch.insert([
 	{
-		name: 'Anish',
-		class: 'TE1',
-		rollno: 31105,
-		interests:['Sleep','Repeat']
+		name: 'Abhay',
+		class: 'TE2',
+		rollno: 31259,
+		interests:['Criket','Repeat']
 	},
 	{
-		name: 'Ashwin',
-		class: 'TE1',
-		rollno: 31107,
+		name: 'Amit',
+		class: 'TE2',
+		rollno: 31283,
+		interests:['Criket','Repeat']
+	},
+	{
+		name: 'Rohan',
+		class: 'TE2',
+		rollno: 31223,
+		interests:['Criket','Repeat']
+	},
+	{
+		name: 'Tushar',
+		class: 'TE2',
+		rollno: 31227,
 		interests:['Football','Reddit','Cat']
 	}])
 
@@ -102,9 +114,9 @@ db.MyBatch.update({ name:'Apoorv' },
 
 db.MyBatch.save(
 	{
-		name: 'Mihir Kumar',
-		class: 'TE1',
-		rollno: 31038
+		name: 'ABC XYZ',
+		class: 'TE2',
+		rollno: 11111
 	})
 	
 db.MyBatch.find({
@@ -149,9 +161,8 @@ db.MyBatch.find( { rollno: { $eq: 31107 } } ).pretty()
 	
 db.MyBatch.find({
 	$nor: [ 
-		{ name: 'Dhruv'},
-		{ rollno: 31105 },
-		{ instahandle : 'iamapoorvdixit'} 
+		{ name: 'Abhay'},
+		{ rollno: 31250 }
 	]
 }).pretty()
 
