@@ -166,10 +166,10 @@ db.MyBatch.find({
 	]
 }).pretty()
 
-db.MyBatch.update({ name:'Anish' },
+db.MyBatch.update({ name:'Nachiket' },
 	{
 		$set : {
-			marks : 90 ,
+			marks : 79 ,
 			college : 'PICT'
 		}
 	})
@@ -202,11 +202,11 @@ db.MyBatch.update({ name:'Mihir Kumar' },
 	})
 
 
-db.MyBatch.update({ name:'Apoorv' },
+db.MyBatch.update({ name:'Nachiket' },
 	{
 		$set : {
 			marks : 85,
-			college : 'PICT'
+			college : 'COEP'
 		}
 	})
 
@@ -231,7 +231,7 @@ db.MyBatch.aggregate([
 	])
 	
 	
-db.MyBatch.createIndex( { college:1, rollno:1 } )
+db.MyBatch.createIndex( { class:'TE2', rollno:1 } )
 
 
 db.MyBatch.aggregate([
@@ -270,5 +270,63 @@ db.MyBatch.mapReduce(
 			out: "Average"
 		}
 	).find().pretty()
+=====================================
+	
+db.MyBatch.find().pretty();
+
+db.MyBatch.find().forEach(
+    function(doc) { print("Student : " + doc.name) }
+)
+
+
+db.MyBatch.find({ college: 'COEP' }, {
+  rollno: 11,
+  marks: 10
+})
+
+db.posts.update({ title: 'Post eight' },
+{
+  title: 'Post 8',
+  body: ' body for post 8',
+  date: Date()
+},
+{
+  upsert: true
+})
+
+db.posts.find().pretty();
+
+db.MyBatch.update({ college: 'PICT' },
+{
+  $set: {
+    rollno: '3453',
+    class: 'TE5'
+  }
+})
+
+db.posts.find().pretty();
+
+db.MyBatch.update({ marks: '90' },
+{
+  $inc: {
+    bonus: 5
+  }
+})
+
+db.MyBatch.update({ name: 'Nachiket' },
+{
+  $rename: {
+    college: 'college name'
+  }
+})
+
+
+db.MyBatch.createIndex({ class: 'TE2' })
+
+db.MyBatch.find({
+  $interests: {
+    $search: "\"Cricket T\""
+    }
+})
 
 
