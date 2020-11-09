@@ -10,10 +10,23 @@ db.createCollection("MyBatch")
 
 db.MyBatch.insert(
 	{
-		name: 'Nachiket',
-		class: 'TE2',
-		rollno: 31227
+		name: 'Tushar',
+		class: 'TE7',
+		rollno: 98324,
+		marks: 34
 	})
+	
+db.MyBatch.insert( { name: 'Abhay', class: 'TE5', rollno: 928324, marks: 43 })
+db.MyBatch.insert( { name: 'ABC', class: 'TE8', rollno: 643562, marks: 80 })
+db.MyBatch.insert( { name: 'Yena', class: 'TE7', rollno: 3256, marks: 75 })
+db.MyBatch.insert( { name: 'Uri', class: 'TE1', rollno: 432346, marks: 76 })
+db.MyBatch.insert( { name: 'Uasg', class: 'TE3', rollno: 345, marks: 67 })
+db.MyBatch.insert( { name: 'Abhar', class: 'TE5', rollno: 928324, marks: 45 })
+db.MyBatch.insert( { name: 'HJH', class: 'TE6', rollno: 928324, marks: 78 })
+db.MyBatch.insert( { name: 'HSDF', class: 'TE7', rollno: 928324, marks: 98 })
+db.MyBatch.insert( { name: 'KUHDIF', class: 'TE2', rollno: 928324, marks: 69 })
+db.MyBatch.insert( { name: 'SDFH', class: 'TE4', rollno: 928324, marks: 67 })
+
 
 db.MyBatch.insert([
 	{
